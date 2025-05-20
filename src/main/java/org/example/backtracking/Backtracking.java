@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Backtracking {
     public static void main(String[] args) {
-        helperStairCase();
-        ArrayList<Integer> r = new ArrayList<>();
-        r.removeLast();
+        List<String> result = new ArrayList<>();
+        pathFromSourceToDestinations(0, 0, 2, 2, "", result);
+        System.out.println(result);
     }
 
     public static List<List<Character>> generatingAllPermutationsHelper(List<Character> people) {
@@ -125,5 +125,18 @@ public class Backtracking {
         printPathStairCase(index + 2, inputSize, result);
         result.removeLast();
     }
-    
+
+    public static void pathFromSourceToDestinations(int sr, int sc, int dr, int dc, String current, List<String> result) {
+        if (sr == dr && sc == dc) {
+            result.add(current);
+            return;
+        }
+        if (sr < dr) {
+            pathFromSourceToDestinations(sr + 1, sc, dr, dc, current + "D", result);
+        }
+        if (sc < dc) {
+            pathFromSourceToDestinations(sr, sc + 1, dr, dc, current + "R", result);
+        }
+    }
+
 }
