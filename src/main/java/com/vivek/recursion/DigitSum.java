@@ -4,7 +4,7 @@ public class DigitSum {
     public static int sum = 0;
 
     public static void main(String[] args) {
-        System.out.println(find(new int[]{1, 2, 3, 4, 5, 6, 7}, 0, 6));
+        pattern(4, 0);
     }
 
     static int sum(int digit) {
@@ -55,5 +55,37 @@ public class DigitSum {
     public static boolean find(int[] array, int index, int target) {
         if (index == array.length) return false;
         return array[index] == target || find(array, index + 1, target);
+    }
+
+    public static int rotateBinarySearch(int[] array, int s, int e, int target) {
+        int mid = s + (e - s) / 2;
+        if (s > e) {
+            return -1;
+        }
+        if (array[mid] == target) return mid;
+        if (array[s] <= array[mid]) {
+            if (target >= array[s] && target <= array[mid]) {
+                return rotateBinarySearch(array, s, mid - 1, target);
+            } else {
+                return rotateBinarySearch(array, mid + 1, e, target);
+            }
+        }
+        if (target >= array[mid] && target <= array[e]) {
+            return rotateBinarySearch(array, mid + 1, e, target);
+        } else {
+            return rotateBinarySearch(array, s, mid - 1, target);
+        }
+
+    }
+
+    public static void pattern(int row, int col) {
+        if (row == 0) return;
+        if (row > col) {
+            pattern(row, col + 1);
+            System.out.print("* ");
+        } else {
+            pattern(row - 1, 0);
+            System.out.println();
+        }
     }
 }

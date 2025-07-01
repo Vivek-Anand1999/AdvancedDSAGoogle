@@ -99,7 +99,7 @@ public class BreadthFirstSearch {
 
     }
 
-    private static boolean hasCycle(int vertex, ArrayList<Integer>[] edges, boolean[] visited) {
+    public static boolean hasCycle(int vertex, ArrayList<Integer>[] edges, boolean[] visited) {
         visited[vertex] = true;
         for (int i = 0; i < edges[vertex].size(); i++) {
             int adjacentVertex = edges[vertex].get(i);
