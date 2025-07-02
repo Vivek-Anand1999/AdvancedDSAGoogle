@@ -4,8 +4,10 @@ import java.util.*;
 
 public class BreadthFirstSearch {
     public static void main(String[] args) {
-        int[][] edge = {{1, 2}, {2, 3}, {3, 4}, {4, 5}};
-        System.out.println(foo(5, edge));
+        int[][] edge = {{0, 1}, {1, 2}, {2, 3}, {3, 1}, {1, 4}};
+        int[][] edges = {{0, 1}, {1, 2}, {1, 3}, {1, 4}, {2, 3}, {5, 6}, {6, 7}};
+        foo(4, edge);
+
     }
 
     public static void BFS(int[][] edges) {
@@ -70,15 +72,40 @@ public class BreadthFirstSearch {
         }
     }
 
-    public static void recurse(int depth) {
-        System.out.println("Recursion depth: " + depth);
-        recurse(depth + 1);
-    }
 
     public static int foo(int A, int[][] edges) {
         boolean[] visited = new boolean[A + 1];
+        boolean[] currentPath = new boolean[A + 1];
         Arrays.fill(visited, false);
-        ArrayList<Integer>[] list = new ArrayList[A + 1];
+        ArrayList<Integer>[] list = list = adjacencyList(A, edges);
+        for (int i = 0; i < visited.length; i++) {
+            if (!visited[i]) {
+                boolean result = hasCycle(i, list, visited, currentPath);
+                if (result) return 1;
+
+            }
+        }
+        return 0;
+
+    }
+
+    public static boolean hasCycle(int vertex, ArrayList<Integer>[] edges, boolean[] visited, boolean[] currentPath) {
+        if (currentPath[vertex]) return true;
+        currentPath[vertex] = true;
+        visited[vertex] = true;
+        for (int i = 0; i < edges[vertex].size(); i++) {
+            int adjacentVertex = edges[vertex].get(i);
+            if (currentPath[adjacentVertex]) return true;
+            if (!visited[adjacentVertex]) {
+                if (hasCycle(adjacentVertex, edges, visited, currentPath)) return true;
+            }
+        }
+        currentPath[vertex] = false;
+        return false;
+    }
+
+    private static ArrayList<Integer>[] adjacencyList(int max, int[][] edges) {
+        ArrayList<Integer>[] list = new ArrayList[max + 1];
         for (int i = 0; i < list.length; i++) {
             list[i] = new ArrayList<>();
         }
@@ -89,27 +116,30 @@ public class BreadthFirstSearch {
             list[u].add(v);
         }
 
-        boolean result = hasCycle(edges[0][0], list, visited);
-        if (result) {
-            return 1;
-        } else {
-            return 0;
-        }
-
-
+        System.out.println(Arrays.deepToString(list));
+        return list;
     }
 
-    public static boolean hasCycle(int vertex, ArrayList<Integer>[] edges, boolean[] visited) {
-        visited[vertex] = true;
-        for (int i = 0; i < edges[vertex].size(); i++) {
-            int adjacentVertex = edges[vertex].get(i);
-            if (visited[adjacentVertex]) {
-                return true;
+    public static void helper(int max, int[][] edges) {
+        ArrayList<Integer>[] list = adjacencyList(max, edges);
+        int vertex = edges[0][0];
+        boolean[] visited = new boolean[max + 1];
+        Arrays.fill(visited, false);
+        for (int i = 0; i < visited.length; i++) {
+            if (!visited[i]) {
+                dfsGraph(i, list, visited);
             }
-            return hasCycle(adjacentVertex, edges, visited);
         }
-        return false;
     }
 
+    public static void dfsGraph(int vertex, ArrayList<Integer>[] lists, boolean[] visited) {
+        visited[vertex] = true;
+        System.out.print(vertex + " ");
+        for (int adjacentVertex : lists[vertex]) {
+            if (!visited[adjacentVertex]) {
+                dfsGraph(adjacentVertex, lists, visited);
+            }
+        }
+    }
 
 }
