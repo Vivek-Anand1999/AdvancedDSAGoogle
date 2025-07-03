@@ -1,18 +1,21 @@
 package com.vivek.graph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class BreadthFirstSearch {
     public static void main(String[] args) {
-        int[][] edge = {{0, 1}, {1, 2}, {2, 3}, {3, 1}, {1, 4}};
-        int[][] edges = {{0, 1}, {1, 2}, {1, 3}, {1, 4}, {2, 3}, {5, 6}, {6, 7}};
-        foo(4, edge);
+        int[] array = {1, 1, 1, 3, 3, 2, 2, 7, 6};
+        int i = recursionHelper(array, 1, 9);
+        System.out.println(i);
 
     }
 
     public static void BFS(int[][] edges) {
         int[][] matric = new int[7][7];
-
         for (int[] edge : edges) {
             int u = edge[0];
             int v = edge[1];
@@ -73,17 +76,14 @@ public class BreadthFirstSearch {
     }
 
 
-    public static int foo(int A, int[][] edges) {
+    public static int recursionHelper(int A, int[][] edges) {
         boolean[] visited = new boolean[A + 1];
         boolean[] currentPath = new boolean[A + 1];
         Arrays.fill(visited, false);
         ArrayList<Integer>[] list = list = adjacencyList(A, edges);
-        for (int i = 0; i < visited.length; i++) {
-            if (!visited[i]) {
-                boolean result = hasCycle(i, list, visited, currentPath);
-                if (result) return 1;
-
-            }
+        boolean result = hasPath(1, 5, visited, list);
+        if (result) {
+            return 1;
         }
         return 0;
 
@@ -104,21 +104,6 @@ public class BreadthFirstSearch {
         return false;
     }
 
-    private static ArrayList<Integer>[] adjacencyList(int max, int[][] edges) {
-        ArrayList<Integer>[] list = new ArrayList[max + 1];
-        for (int i = 0; i < list.length; i++) {
-            list[i] = new ArrayList<>();
-        }
-
-        for (int i = 0; i < edges.length; i++) {
-            int u = edges[i][0];
-            int v = edges[i][1];
-            list[u].add(v);
-        }
-
-        System.out.println(Arrays.deepToString(list));
-        return list;
-    }
 
     public static void helper(int max, int[][] edges) {
         ArrayList<Integer>[] list = adjacencyList(max, edges);
@@ -140,6 +125,70 @@ public class BreadthFirstSearch {
                 dfsGraph(adjacentVertex, lists, visited);
             }
         }
+    }
+
+    private static ArrayList<Integer>[] adjacencyList(int max, int[][] edges) {
+        ArrayList<Integer>[] list = new ArrayList[max + 1];
+        for (int i = 0; i < list.length; i++) {
+            list[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < edges.length; i++) {
+            int u = edges[i][0];
+            int v = edges[i][1];
+            list[u].add(v);
+        }
+
+        System.out.println(Arrays.deepToString(list));
+        return list;
+    }
+
+    public static boolean hasPath(int vertex, int target, boolean[] visited, ArrayList<Integer>[] adjacencyList) {
+        if (vertex == target) return true;
+        visited[vertex] = true;
+        for (int adjacentVertex : adjacencyList[vertex]) {
+            if (!visited[adjacentVertex]) {
+                if (hasPath(adjacentVertex, target, visited, adjacencyList)) return true;
+            }
+        }
+        return false;
+    }
+
+    public static int recursionHelper(int[] array, int source, int destination) {
+        boolean[] visited = new boolean[array.length + 1];
+        Arrays.fill(visited, false);
+        ArrayList<Integer>[] adjacencyList = adjacencyList(array);
+        boolean result = hasFDFS(source, destination, adjacencyList, visited);
+        if (result) {
+            return 1;
+        }
+        return 0;
+    }
+
+    private static boolean hasFDFS(int vertex, int destination, ArrayList<Integer>[] list, boolean[] visited) {
+        if (vertex == destination) {
+            return true;
+        }
+        visited[vertex] = true;
+        for (int adjacencyVertex : list[vertex]) {
+            if (!visited[adjacencyVertex]) {
+                if (hasFDFS(adjacencyVertex, destination, list, visited)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static ArrayList<Integer>[] adjacencyList(int[] A) {
+        ArrayList<Integer>[] list = new ArrayList[A.length + 1];
+        for (int i = 0; i < list.length; i++) {
+            list[i] = new ArrayList<>();
+        }
+        for (int i = 1; i < A.length; i++) {
+            list[A[i]].add(i + 1);
+        }
+        return list;
     }
 
 }
