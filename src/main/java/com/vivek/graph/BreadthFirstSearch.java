@@ -8,7 +8,7 @@ import java.util.Stack;
 
 public class BreadthFirstSearch {
     public static void main(String[] args) {
-        int[] array = {1, 1, 1, 3, 3, 2, 2, 7, 6};
+        int[] array = { 1, 1, 1, 3, 3, 2, 2, 7, 6 };
         int i = recursionHelper(array, 1, 9);
         System.out.println(i);
 
@@ -75,7 +75,6 @@ public class BreadthFirstSearch {
         }
     }
 
-
     public static int recursionHelper(int A, int[][] edges) {
         boolean[] visited = new boolean[A + 1];
         boolean[] currentPath = new boolean[A + 1];
@@ -90,20 +89,22 @@ public class BreadthFirstSearch {
     }
 
     public static boolean hasCycle(int vertex, ArrayList<Integer>[] edges, boolean[] visited, boolean[] currentPath) {
-        if (currentPath[vertex]) return true;
+        if (currentPath[vertex])
+            return true;
         currentPath[vertex] = true;
         visited[vertex] = true;
         for (int i = 0; i < edges[vertex].size(); i++) {
             int adjacentVertex = edges[vertex].get(i);
-            if (currentPath[adjacentVertex]) return true;
+            if (currentPath[adjacentVertex])
+                return true;
             if (!visited[adjacentVertex]) {
-                if (hasCycle(adjacentVertex, edges, visited, currentPath)) return true;
+                if (hasCycle(adjacentVertex, edges, visited, currentPath))
+                    return true;
             }
         }
         currentPath[vertex] = false;
         return false;
     }
-
 
     public static void helper(int max, int[][] edges) {
         ArrayList<Integer>[] list = adjacencyList(max, edges);
@@ -144,11 +145,13 @@ public class BreadthFirstSearch {
     }
 
     public static boolean hasPath(int vertex, int target, boolean[] visited, ArrayList<Integer>[] adjacencyList) {
-        if (vertex == target) return true;
+        if (vertex == target)
+            return true;
         visited[vertex] = true;
         for (int adjacentVertex : adjacencyList[vertex]) {
             if (!visited[adjacentVertex]) {
-                if (hasPath(adjacentVertex, target, visited, adjacencyList)) return true;
+                if (hasPath(adjacentVertex, target, visited, adjacencyList))
+                    return true;
             }
         }
         return false;
