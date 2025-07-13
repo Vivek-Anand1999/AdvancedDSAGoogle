@@ -7,11 +7,10 @@ import java.util.Queue;
 
 public class PrimsAlgo {
     public static void main(String[] args) {
-        int[][] edges = {{1, 2, 7}, {1, 4, 8}, {2, 3, 6}, {2, 4, 3}, {2, 3, 8}, {2, 1, 7}, {3, 4, 2},
-                {3, 5, 2}, {3, 6, 5}, {3, 2, 6}, {3, 2, 8}, {4, 1, 8}, {4, 3, 4}, {4, 5, 3}, {4, 2, 3},
-                {5, 3, 2}, {5, 4, 3}, {5, 6, 5}, {6, 3, 5}, {6, 5, 5}};
-        int[][] array = {{1, 2, 14}, {2, 3, 7}, {3, 1, 2}};
-        System.out.println(minimumCostSpinningTree(array, 3));
+        int[][] edges = { { 1, 2, 7 }, { 1, 4, 8 }, { 2, 3, 6 }, { 2, 4, 3 }, { 2, 3, 8 }, { 2, 1, 7 }, { 3, 4, 2 },
+                { 3, 5, 2 }, { 3, 6, 5 }, { 3, 2, 6 }, { 3, 2, 8 }, { 4, 1, 8 }, { 4, 3, 4 }, { 4, 5, 3 }, { 4, 2, 3 },
+                { 5, 3, 2 }, { 5, 4, 3 }, { 5, 6, 5 }, { 6, 3, 5 }, { 6, 5, 5 } };
+        int[][] array = { { 1, 2, 14 }, { 2, 3, 7 }, { 3, 1, 2 } };
     }
 
     private static ArrayList<pairs>[] adjacencyList(int n, int[][] edges) {
