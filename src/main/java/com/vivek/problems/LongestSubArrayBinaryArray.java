@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class LongestSubArrayBinaryArray {
     public static void main(String[] args) {
-        int[] array = {4, 3, 2, 7, 6, -2};
-        System.out.println(specialIndex(array));
+        int[] array = {2, 2, 6, 4, 5, 1, 5, 2, 6, 4, 1};
+        System.out.println(minLength(array));
     }
 
     public static int longestSubArray(int[] array) {
@@ -63,5 +63,32 @@ public class LongestSubArrayBinaryArray {
             }
         }
         return count;
+    }
+
+    public static int minLength(int[] array) {
+        int minElement = Integer.MAX_VALUE;
+        int maxElement = Integer.MIN_VALUE;
+        for (int i = 0; i < array.length; i++) {
+            minElement = Math.min(minElement, array[i]);
+            maxElement = Math.max(maxElement, array[i]);
+        }
+        if (minElement == maxElement) return 1;
+        int minIndex = -1;
+        int maxIndex = -1;
+        int ans = Integer.MAX_VALUE;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == minElement) {
+                minIndex = i;
+                if (maxIndex != -1) {
+                    ans = Math.min(ans, (i - maxIndex + 1));
+                }
+            } else if (array[i] == maxElement) {
+                maxIndex = i;
+                if (minIndex != -1) {
+                    ans = Math.min(ans, (i - minIndex + 1));
+                }
+            }
+        }
+        return ans;
     }
 }
