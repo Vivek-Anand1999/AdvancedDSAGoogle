@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class LongestSubArrayBinaryArray {
     public static void main(String[] args) {
-        int[] array = {2, 2, 6, 4, 5, 1, 5, 2, 6, 4, 1};
+        int[] array = { 2, 2, 6, 4, 5, 1, 5, 2, 6, 4, 1 };
         System.out.println(minLength(array));
     }
 
@@ -35,8 +35,12 @@ public class LongestSubArrayBinaryArray {
         int[] evenPrefixSum = new int[array.length];
         int[] oddPrefixSum = new int[array.length];
         for (int arrayIndex = 0; arrayIndex < array.length; arrayIndex++) {
-            evenPrefixSum[arrayIndex] = arrayIndex == 0 ? array[arrayIndex] : arrayIndex % 2 == 0 ? evenPrefixSum[arrayIndex - 1] + array[arrayIndex] : evenPrefixSum[arrayIndex - 1];
-            oddPrefixSum[arrayIndex] = arrayIndex == 0 ? 0 : arrayIndex % 2 != 0 ? oddPrefixSum[arrayIndex - 1] + array[arrayIndex] : oddPrefixSum[arrayIndex - 1];
+            evenPrefixSum[arrayIndex] = arrayIndex == 0 ? array[arrayIndex]
+                    : arrayIndex % 2 == 0 ? evenPrefixSum[arrayIndex - 1] + array[arrayIndex]
+                            : evenPrefixSum[arrayIndex - 1];
+            oddPrefixSum[arrayIndex] = arrayIndex == 0 ? 0
+                    : arrayIndex % 2 != 0 ? oddPrefixSum[arrayIndex - 1] + array[arrayIndex]
+                            : oddPrefixSum[arrayIndex - 1];
         }
 
         System.out.println(Arrays.toString(evenPrefixSum));
@@ -72,7 +76,8 @@ public class LongestSubArrayBinaryArray {
             minElement = Math.min(minElement, array[i]);
             maxElement = Math.max(maxElement, array[i]);
         }
-        if (minElement == maxElement) return 1;
+        if (minElement == maxElement)
+            return 1;
         int minIndex = -1;
         int maxIndex = -1;
         int ans = Integer.MAX_VALUE;
