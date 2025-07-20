@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public class Diagonal {
     public static void main(String[] args) {
-        int[][] array = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
-        transposeRectangle(array);
-//        System.out.println(Arrays.deepToString(array));
+        int[][] array = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+        rotate270(array);
+        System.out.println(Arrays.deepToString(array));
     }
 
     public static void diagonal(int[][] array) {
@@ -81,5 +81,51 @@ public class Diagonal {
             }
         }
         System.out.println(Arrays.deepToString(result));
+    }
+
+    public static void rotateMatrix90(int[][] array) {
+        // transpose
+        for (int row = 0; row < array.length; row++) {
+            for (int col = row + 1; col < array[0].length; col++) {
+                int temp = array[row][col];
+                array[row][col] = array[col][row];
+                array[col][row] = temp;
+            }
+        }
+        // swap
+        for (int row = 0; row < array.length; row++) {
+            int start = 0;
+            int end = array[row].length - 1;
+            while (start < end) {
+                int temp = array[row][start];
+                array[row][start] = array[row][end];
+                array[row][end] = temp;
+                start++;
+                end--;
+            }
+        }
+    }
+
+    public static void rotate270(int[][] array) {
+        // transpose
+        for (int row = 0; row < array.length; row++) {
+            for (int col = row + 1; col < array[0].length; col++) {
+                int temp = array[row][col];
+                array[row][col] = array[col][row];
+                array[col][row] = temp;
+            }
+        }
+        // swapping
+        for (int col = 0; col < array[0].length; col++) {
+            int start = 0;
+            int end = array.length - 1;
+            while (start < end) {
+                int temp = array[start][col];
+                array[start][col] = array[end][col];
+                array[end][col] = temp;
+                start++;
+                end--;
+            }
+        }
     }
 }
