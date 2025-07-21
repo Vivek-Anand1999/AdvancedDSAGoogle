@@ -4,9 +4,7 @@ import java.util.Arrays;
 
 public class Diagonal {
     public static void main(String[] args) {
-        int[][] array = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
-        rotate270(array);
-        System.out.println(Arrays.deepToString(array));
+        System.out.println(convertToDecimal(1011010));
     }
 
     public static void diagonal(int[][] array) {
@@ -127,5 +125,19 @@ public class Diagonal {
                 end--;
             }
         }
+    }
+
+    // Bit Mnaupulations
+    public static int convertToDecimal(int n) {
+        int pow = 1;
+        int ans = 0;
+        while (n > 0) {
+            int rem = n % 10;
+            n = n / 10;
+            ans = ans + (rem * pow);
+            pow *= 2;
+        }
+        return ans;
+
     }
 }
