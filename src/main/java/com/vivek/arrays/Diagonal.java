@@ -3,8 +3,10 @@ package com.vivek.arrays;
 import java.util.Arrays;
 
 public class Diagonal {
+
     public static void main(String[] args) {
-        System.out.println(convertToDecimal(1011010));
+        String s = "anmaddamm";
+        System.out.println(longestPalindromeString(s));
     }
 
     public static void diagonal(int[][] array) {
@@ -139,5 +141,94 @@ public class Diagonal {
         }
         return ans;
 
+    }
+
+    public static int convertToDecimalRec(int n, int pow) {
+        if (n == 0)
+            return 0;
+        int rem = n % 10;
+        int ans = rem * pow;
+        return ans + convertToDecimalRec(n / 10, pow * 2);
+
+    }
+
+    public static int convertToBinaryRec(int n, int pow) {
+        if (n == 0)
+            return 0;
+        int rem = n % 2;
+        int ans = rem * pow;
+        return ans + convertToBinaryRec(n / 2, pow * 10);
+
+    }
+
+    public static int binaryAdd(int n1, int n2) {
+        int carry = 0;
+        int pow = 1;
+        int ans = 0;
+        while (n1 != 0 || n2 != 0 || carry != 0) { // TC = o(log10(Max(n1,n2)))
+            int n1Rem = n1 % 10;
+            int n2Rem = n2 % 10;
+            n1 = n1 / 10;
+            n2 = n2 / 10;
+            int sum = n1Rem + n2Rem + carry;
+            int rem = sum % 2;
+            carry = sum / 2;
+            ans = ans + (rem * pow);
+            pow *= 10;
+        }
+        return ans;
+    }
+
+    public static int binaryAddRec(int n1, int n2, int carry, int pow) {
+        if (n1 == 0 && n2 == 0 && carry == 0)
+            return 0;
+        int n1Rem = n1 % 10;
+        int n2Rem = n2 % 10;
+        int sum = n1Rem + n2Rem + carry;
+        int rem = sum % 2;
+        int ans = rem * pow;
+        ans = ans + binaryAddRec(n1 / 10, n2 / 10, sum / 2, pow * 10);
+        return ans;
+
+    }
+
+    public static int longestPalindromeString(String s) {
+        if (s.length() == 0)
+            return 0;
+        int ans = 1;
+        for (int index = 1; index < s.length(); index++) {
+            int oddLength = oddLength(s, index);
+            int evenLength = evenLength(s, index);
+            ans = Math.max(ans, Math.max(oddLength, evenLength));
+        }
+        return ans;
+    }
+
+    private static int oddLength(String s, int index) {
+        int l = index - 1;
+        int r = index + 1;
+        while (l >= 0 && r < s.length()) {
+            if (s.charAt(l) == s.charAt(r)) {
+                l--;
+                r++;
+            } else {
+                break;
+            }
+        }
+        return r - l - 1;
+    }
+
+    private static int evenLength(String s, int index) {
+        int l = index;
+        int r = index + 1;
+        while (l >= 0 && r < s.length()) {
+            if (s.charAt(l) == s.charAt(r)) {
+                l--;
+                r++;
+            } else {
+                break;
+            }
+        }
+        return r - l - 1;
     }
 }
