@@ -6,7 +6,9 @@ public class Diagonal {
 
     public static void main(String[] args) {
         String s = "anmaddamm";
-        System.out.println(longestPalindromeString(s));
+        int[] array = { 8, 3, 7, 4, 9, 2, 6, 5, 1, 6,28 };
+        mergeSortRec(array);
+        System.out.println(Arrays.toString(array));
     }
 
     public static void diagonal(int[][] array) {
@@ -230,5 +232,138 @@ public class Diagonal {
             }
         }
         return r - l - 1;
+    }
+
+    public static boolean intervealedString(String s1, String s2, String s3) {
+        if (s1.length() + s2.length() != s3.length())
+            return false;
+        int s1Pointer = 0;
+        int s2Pointer = 0;
+        int s3Pointer = 0;
+        while (s1Pointer < s1.length() && s2Pointer < s2.length()) {
+            if (s1.charAt(s1Pointer) == s3.charAt(s3Pointer)) {
+                s1Pointer++;
+                s3Pointer++;
+            } else if (s2.charAt(s2Pointer) == s3.charAt(s3Pointer)) {
+                s3Pointer++;
+                s2Pointer++;
+            } else {
+                return false;
+            }
+        }
+        while (s1Pointer < s1.length()) {
+            if (s1.charAt(s1Pointer) == s3.charAt(s3Pointer)) {
+                s1Pointer++;
+                s3Pointer++;
+            } else {
+                return false;
+            }
+        }
+
+        while (s2Pointer < s2.length()) {
+            if (s2.charAt(s2Pointer) == s3.charAt(s3Pointer)) {
+                s3Pointer++;
+                s2Pointer++;
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static int pow(int base, int pow, int Mod) {
+        if (pow == 0)
+            return 1;
+        int halfPow = pow(base, pow / 2, Mod);
+        if (pow % 2 == 0) {
+            return (halfPow * halfPow) % Mod;
+        } else {
+            return ((halfPow * halfPow) % Mod * base) % Mod;
+        }
+    }
+
+    public static void mergeSort(int[] array) {
+        int[] newArray = new int[array.length];
+        int pass = 2;
+        int i = 0;
+        for (pass = 2; pass <= array.length; pass *= 2) {
+            for (i = 0; pass + i - 1 < array.length; i += pass) {
+                int low = i;
+                int high = pass + i - 1;
+                int mid = ((high - low) / 2) + low;
+                merge(newArray, array, low, mid, high);
+            }
+            if (i < array.length) {
+                newArray[i] = array[i];
+            }
+            System.arraycopy(newArray, 0, array, 0, array.length);
+        }
+
+        if (pass / 2 < array.length) {
+            int low = 0;
+            int high = array.length - 1;
+            int mid = (pass / 2) - 1;
+            merge(newArray, array, low, mid, high);
+        }
+        System.arraycopy(newArray, 0, array, 0, array.length);
+
+        System.out.println(Arrays.toString(array));
+
+    }
+
+    private static void merge(int[] newArray, int[] array, int low, int mid, int high) {
+        int i = low;
+        int j = mid + 1;
+        int k = low;
+        while (i <= mid && j <= high) {
+            if (array[i] < array[j]) {
+                newArray[k++] = array[i++];
+            } else {
+                newArray[k++] = array[j++];
+            }
+        }
+        while (i <= mid) {
+            newArray[k++] = array[i++];
+        }
+        while (j <= high) {
+            newArray[k++] = array[j++];
+        }
+    }
+
+    public static void mergeSortRec(int[] array) {
+        mergeSortRecursion(array, 0, array.length-1);
+    }
+
+    private static void mergeSortRecursion(int[] array, int low, int high) {
+        if (low == high)
+            return;
+        int mid = ((high - low) / 2) + low;
+        mergeSortRecursion(array, low, mid);
+        mergeSortRecursion(array, mid + 1, high);
+        mergeList(array, low, mid, high);
+    }
+
+    private static void mergeList(int[] array, int low, int mid, int high) {
+        int i = low;
+        int j = mid + 1;
+        int[] tempArray = new int[high - low + 1];
+        int index = 0;
+        while (i <= mid && j <= high) {
+            if (array[i] > array[j]) {
+                tempArray[index++] = array[j++];
+            } else {
+                tempArray[index++] = array[i++];
+            }
+        }
+        while (i <= mid) {
+            tempArray[index++] = array[i++];
+        }
+        while (j <= high) {
+            tempArray[index++] = array[j++];
+        }
+        for (int tempArrayIndex = 0; tempArrayIndex < tempArray.length; tempArrayIndex++) {
+            array[low++] = tempArray[tempArrayIndex];
+        }
     }
 }
