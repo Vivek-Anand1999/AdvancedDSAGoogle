@@ -6,7 +6,7 @@ public class Diagonal {
 
     public static void main(String[] args) {
         String s = "anmaddamm";
-        int[] array = { 8, 3, 7, 4, 9, 2, 6, 5, 1, 6,28 };
+        int[] array = { 8, 3, 7, 4, 9, 2, 6, 5, 1, 6, 28 };
         mergeSortRec(array);
         System.out.println(Arrays.toString(array));
     }
@@ -332,7 +332,7 @@ public class Diagonal {
     }
 
     public static void mergeSortRec(int[] array) {
-        mergeSortRecursion(array, 0, array.length-1);
+        mergeSortRecursion(array, 0, array.length - 1);
     }
 
     private static void mergeSortRecursion(int[] array, int low, int high) {
@@ -363,7 +363,8 @@ public class Diagonal {
             tempArray[index++] = array[j++];
         }
         for (int tempArrayIndex = 0; tempArrayIndex < tempArray.length; tempArrayIndex++) {
-            array[low++] = tempArray[tempArrayIndex];
+            array[low + tempArrayIndex] = tempArray[tempArrayIndex];
         }
     }
+
 }
